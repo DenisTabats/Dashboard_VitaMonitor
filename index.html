@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Смена — ВитаМонитор</title>
+  <meta name="description" content="Рабочее место врача стационара: пациенты отделения, показатели, консилиумы и передача смены.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="app-page">
+  <header class="app-header">
+    <div class="app-header-inner">
+      <a class="brand" href="index.html" aria-label="ВитаМонитор — экран смены">
+        <span class="brand-mark" aria-hidden="true">+</span>
+        <span class="brand-text">ВитаМонитор<small>АРМ врача · стационар</small></span>
+      </a>
+      <div class="header-context">
+        <span class="header-department">Терапевтическое отделение</span>
+        <span class="header-shift">Смена 08:00–20:00</span>
+      </div>
+      <div class="header-user">
+        <span class="user-name">Иванова А. С.</span>
+        <span class="user-role">врач, 1 категория</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="app-nav" aria-label="Разделы">
+    <div class="app-nav-inner">
+      <a class="is-current" href="index.html">Смена</a>
+      <a href="index.html#patients">Пациенты</a>
+      <a href="index.html#consiliums">Консилиумы</a>
+      <a href="dashboard.html">Карта пациента</a>
+      <span class="nav-date">12.11.2026, четверг</span>
+    </div>
+  </nav>
+
+  <main class="app-main">
+    <div class="app-container">
+      <div class="page-head">
+        <div>
+          <p class="breadcrumbs">Стационар / Терапевтическое отделение</p>
+          <h1>Смена 12.11.2026</h1>
+          <p class="page-sub">Список наблюдения на 09:42.</p>
+        </div>
+        <div class="page-actions">
+          <button class="button button-secondary" type="button" onclick="window.print()">Печать списка</button>
+          <a class="button" href="dashboard.html">Открыть карту</a>
+        </div>
+      </div>
+
+      <section class="summary-strip" aria-label="Сводка по смене">
+        <div class="summary-item"><span>Коек занято</span><strong>14 / 24</strong><small>терапия</small></div>
+        <div class="summary-item"><span>Пациентов в списке</span><strong>6</strong><small>наблюдение</small></div>
+        <div class="summary-item summary-alert"><span>Требуют внимания</span><strong>2</strong><small>по показателям</small></div>
+        <div class="summary-item"><span>Консилиумов</span><strong>3</strong><small>на сегодня</small></div>
+        <div class="summary-item"><span>Передача смены</span><strong>20:00</strong><small>кабинет 214</small></div>
+      </section>
+
+      <div class="shift-layout">
+        <section class="panel shift-panel" id="patients">
+          <div class="panel-header">
+            <div>
+              <h2>Пациенты отделения</h2>
+              <p>Показатели — последнее измерение. Статус выставлен дежурным врачом.</p>
+            </div>
+            <span class="record-count" id="shiftCount">6</span>
+          </div>
+
+          <div class="table-tools">
+            <label class="field search-field">
+              <span>Поиск</span>
+              <input type="search" id="shiftSearch" placeholder="Фамилия, палата или диагноз">
+            </label>
+            <label class="field">
+              <span>Статус</span>
+              <select id="shiftStatus">
+                <option value="all">Все пациенты</option>
+                <option value="risk">Требуют внимания</option>
+                <option value="watch">Наблюдение</option>
+                <option value="stable">Стабильные</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="table-scroll">
+            <table class="data-table shift-table">
+              <thead>
+                <tr>
+                  <th>Палата</th>
+                  <th>Пациент</th>
+                  <th>Диагноз</th>
+                  <th>Пульс</th>
+                  <th>АД</th>
+                  <th>SpO₂</th>
+                  <th>T</th>
+                  <th>Статус</th>
+                  <th>Запись</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="shiftRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <aside class="shift-aside">
+          <section class="panel" id="consiliums">
+            <div class="panel-header compact">
+              <h2>Консилиумы на сегодня</h2>
+              <span class="record-count">3</span>
+            </div>
+            <div class="consilium-feed" id="todayConsiliums"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header compact">
+              <h2>Передача смены</h2>
+              <span class="muted-small">черновик</span>
+            </div>
+            <label class="field">
+              <span class="visually-hidden">Текст передачи смены</span>
+              <textarea id="handoverText" rows="7" placeholder="Что важно передать следующей смене"></textarea>
+            </label>
+            <div class="handover-actions">
+              <button class="button button-secondary button-small" type="button" id="saveHandover">Сохранить</button>
+              <span class="muted-small" id="handoverStatus">не сохранено</span>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="app-container footer-line">
+      <span>ВитаМонитор · 2026</span>
+      <span>ПИУКИС-23 · HTML5, CSS3, JavaScript</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="appToast" hidden></div>
+  <script src="js/patients.js"></script>
+  <script src="js/interface.js"></script>
+</body>
+</html>

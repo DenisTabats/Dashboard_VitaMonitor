@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Карта пациента — ВитаМонитор</title>
+  <meta name="description" content="Карта пациента стационара: показатели, лист наблюдения, записи врача и консилиумы.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="app-page">
+  <header class="app-header">
+    <div class="app-header-inner">
+      <a class="brand" href="index.html" aria-label="ВитаМонитор — экран смены">
+        <span class="brand-mark" aria-hidden="true">+</span>
+        <span class="brand-text">ВитаМонитор<small>АРМ врача · стационар</small></span>
+      </a>
+      <div class="header-context">
+        <span class="header-department">Терапевтическое отделение</span>
+        <span class="header-shift">Смена 08:00–20:00</span>
+      </div>
+      <div class="header-user">
+        <span class="user-name">Иванова А. С.</span>
+        <span class="user-role">врач, 1 категория</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="app-nav" aria-label="Разделы">
+    <div class="app-nav-inner">
+      <a href="index.html">Смена</a>
+      <a href="index.html#patients">Пациенты</a>
+      <a href="index.html#consiliums">Консилиумы</a>
+      <a class="is-current" href="dashboard.html">Карта пациента</a>
+      <span class="nav-date">12.11.2026, четверг</span>
+    </div>
+  </nav>
+
+  <main class="app-main">
+    <div class="app-container">
+      <div class="patient-layout">
+        <aside class="patient-list-panel" aria-label="Список пациентов">
+          <div class="panel-header compact">
+            <div>
+              <h2>Пациенты</h2>
+              <p class="muted-small">Терапевтическое отделение</p>
+            </div>
+            <span class="record-count" id="patientCount">0</span>
+          </div>
+          <div class="list-tools">
+            <label class="field">
+              <span class="visually-hidden">Поиск пациента</span>
+              <input type="search" id="patientSearch" placeholder="Фамилия или палата">
+            </label>
+            <label class="field">
+              <span class="visually-hidden">Фильтр по статусу</span>
+              <select id="statusFilter">
+                <option value="all">Все статусы</option>
+                <option value="risk">Требуют внимания</option>
+                <option value="watch">Наблюдение</option>
+                <option value="stable">Стабильные</option>
+              </select>
+            </label>
+          </div>
+          <div id="patientList" class="patient-list"></div>
+        </aside>
+
+        <section class="patient-view" id="patientView" aria-live="polite">
+          <div class="empty-state">
+            <h2>Выберите пациента</h2>
+            <p>Слева находится список наблюдения. Карточка откроется без перезагрузки страницы.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="app-container footer-line">
+      <span>ВитаМонитор · 2026</span>
+      <span><a href="index.html">Вернуться к смене</a></span>
+    </div>
+  </footer>
+
+  <div class="toast" id="appToast" hidden></div>
+  <script src="js/patients.js"></script>
+  <script src="js/interface.js"></script>
+</body>
+</html>
