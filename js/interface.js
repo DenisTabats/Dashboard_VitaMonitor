@@ -197,6 +197,31 @@ function initHandover() {
   });
 }
 
+function updateNavDate() {
+  const weekdays = [
+    "воскресенье",
+    "понедельник",
+    "вторник",
+    "среда",
+    "четверг",
+    "пятница",
+    "суббота"
+  ];
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, "0");
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const dateText = day + "." + month + "." + today.getFullYear() + ", " + weekdays[today.getDay()];
+
+  document.querySelectorAll(".nav-date").forEach((element) => {
+    element.textContent = dateText;
+  });
+
+  const shiftDate = document.getElementById("shiftDate");
+  if (shiftDate) {
+    shiftDate.textContent = day + "." + month + "." + today.getFullYear();
+  }
+}
+
 function initShiftPage() {
   if (!document.getElementById("shiftRows")) return;
   renderShiftRows();
@@ -490,6 +515,8 @@ function initPatientPage() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  updateNavDate();
+  setInterval(updateNavDate, 60000);
   initShiftPage();
   initPatientPage();
 });
